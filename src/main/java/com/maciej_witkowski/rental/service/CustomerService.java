@@ -3,6 +3,8 @@ package com.maciej_witkowski.rental.service;
 import com.maciej_witkowski.rental.model.Customer;
 import com.maciej_witkowski.rental.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,6 +34,15 @@ public class CustomerService {
 
         customerRepository.save(customer);
         return customer;
+    }
+
+    public ResponseEntity<HttpStatus> deleteCustomer(Long id) {
+        if (!customerRepository.existsById(id)) {
+            throw new IllegalStateException("Customer with id " + id + " does not exists!");
+        }
+
+        customerRepository.deleteById(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 }
