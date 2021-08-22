@@ -3,6 +3,8 @@ package com.maciej_witkowski.rental.service;
 import com.maciej_witkowski.rental.model.Product;
 import com.maciej_witkowski.rental.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,6 +30,15 @@ public class ProductService {
 
         productRepository.save(product);
         return product;
+    }
+
+    public ResponseEntity<HttpStatus> deleteProduct(Long id) {
+        if (!productRepository.existsById(id)) {
+            throw new IllegalStateException("Product with id " + id + " does not exists!");
+        }
+
+        productRepository.deleteById(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 }
