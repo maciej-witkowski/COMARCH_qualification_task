@@ -21,4 +21,13 @@ public class ProductService {
         return productRepository.findAll();
     }
 
+    public Product addNewProduct(Product product) {
+        if (productRepository.findProductByNameAndBrand(product.getName(), product.getBrand()).isPresent()) {
+            throw new IllegalStateException("Given name and brand already exists!");
+        }
+
+        productRepository.save(product);
+        return product;
+    }
+
 }
