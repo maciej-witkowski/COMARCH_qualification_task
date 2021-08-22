@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -34,6 +35,17 @@ public class ProductController {
     @ResponseBody
     public ResponseEntity<HttpStatus> deleteProduct(@PathVariable("productId") Long id) {
         return productService.deleteProduct(id);
+    }
+
+    @PutMapping(path = "{productId}")
+    @ResponseBody
+    public ResponseEntity<HttpStatus> updateProduct(
+            @PathVariable("productId") Long id,
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String brand,
+            @RequestParam(required = false) BigDecimal price
+    ) {
+        return productService.updateProduct(id, name, brand, price);
     }
 
 }
