@@ -23,4 +23,9 @@ public class CustomerController {
         return customerService.getCustomers();
     }
 
+    @PostMapping
+    public Customer registerCustomer(@RequestBody Customer customer) {
+        return customerService.registerCustomer(customer);
+    }
+
 }

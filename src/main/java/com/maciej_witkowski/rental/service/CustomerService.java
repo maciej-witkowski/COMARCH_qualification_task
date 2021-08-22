@@ -20,4 +20,18 @@ public class CustomerService {
     public List<Customer> getCustomers() {
         return customerRepository.findAll();
     }
+
+    public Customer registerCustomer(Customer customer) {
+        if (customerRepository.findCustomerByEmailAndPhoneNumber(customer.getEmail(), customer.getPhoneNumber()).isPresent()) {
+            throw new IllegalStateException("Given email and phone number already exists!");
+        } else if (customerRepository.findCustomerByEmail(customer.getEmail()).isPresent()) {
+            throw new IllegalStateException("Email is taken!");
+        } else if (customerRepository.findCustomerByPhoneNumber(customer.getPhoneNumber()).isPresent()) {
+            throw new IllegalStateException("Phone number is taken!");
+        }
+
+        customerRepository.save(customer);
+        return customer;
+    }
+
 }
