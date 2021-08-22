@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -42,6 +43,39 @@ public class CustomerService {
         }
 
         customerRepository.deleteById(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @Transactional
+    public ResponseEntity<HttpStatus> updateCustomer(Long id, String firstName, String lastName, String email, String phoneNumber) {
+        Customer customer = customerRepository.findById(id).orElseThrow(
+                () -> new IllegalStateException("Customer with id " + id + " does not exists!")
+        );
+
+        if (firstName != null && firstName.length() > 0 && !firstName.equals(customer.getFirstName())) {
+            customer.setFirstName(firstName);
+        }
+
+        if (lastName != null && lastName.length() > 0 && !lastName.equals(customer.getLastName())) {
+            customer.setLastName(lastName);
+        }
+
+        if (email != null && email.length() > 0 && !email.equals(customer.getEmail())) {
+            if (customerRepository.findCustomerByEmail(email).isPresent()) {
+                throw new IllegalStateException("Email is taken!");
+            }
+
+            customer.setEmail(email);
+        }
+
+        if (phoneNumber != null && phoneNumber.length() > 0 && !phoneNumber.equals(customer.getPhoneNumber())) {
+            if (customerRepository.findCustomerByPhoneNumber(phoneNumber).isPresent()) {
+                throw new IllegalStateException("Phone number is taken!");
+            }
+
+            customer.setPhoneNumber(phoneNumber);
+        }
+
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
