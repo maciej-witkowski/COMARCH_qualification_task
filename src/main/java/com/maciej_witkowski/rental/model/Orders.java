@@ -46,12 +46,35 @@ public class Orders {
 
     public Orders() {}
 
+    public Orders(Customer customer, Product product, LocalDateTime dateOfLoan, LocalDateTime dateOfReturn) {
+        this.customer = customer;
+        this.product = product;
+        this.dateOfLoan = dateOfLoan;
+        this.dateOfReturn = dateOfReturn;
+    }
+
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
     public LocalDateTime getDateOfLoan() {
