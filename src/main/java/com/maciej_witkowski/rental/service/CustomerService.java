@@ -1,6 +1,7 @@
 package com.maciej_witkowski.rental.service;
 
 import com.maciej_witkowski.rental.model.Customer;
+import com.maciej_witkowski.rental.model.Report;
 import com.maciej_witkowski.rental.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -8,7 +9,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.Month;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CustomerService {
@@ -22,6 +26,23 @@ public class CustomerService {
 
     public List<Customer> getCustomers() {
         return customerRepository.findAll();
+    }
+
+    public List<Report> getOrdersReport(Long id, Month month) {
+        Optional<Customer> optionalCustomer = customerRepository.findById(id);
+
+        if (optionalCustomer.isEmpty()) {
+            throw new IllegalStateException("Customer with id " + id + " does not exists!");
+        }
+
+        return optionalCustomer.get().getOrders().stream().filter(order -> order.getDateOfLoan().getMonth().equals(month)).map(order -> new Report(
+                order.getId(),
+                order.getProduct().getName(),
+                order.getProduct().getBrand(),
+                order.getDateOfLoan(),
+                order.getDateOfReturn(),
+                order.getTotalPrice()
+        )).collect(Collectors.toList());
     }
 
     public Customer registerCustomer(Customer customer) {

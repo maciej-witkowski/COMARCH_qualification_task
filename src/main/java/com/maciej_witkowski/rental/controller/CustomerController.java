@@ -1,12 +1,15 @@
 package com.maciej_witkowski.rental.controller;
 
 import com.maciej_witkowski.rental.model.Customer;
+import com.maciej_witkowski.rental.model.Orders;
+import com.maciej_witkowski.rental.model.Report;
 import com.maciej_witkowski.rental.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.Month;
 import java.util.List;
 
 @RestController
@@ -23,6 +26,14 @@ public class CustomerController {
     @GetMapping
     public List<Customer> getCustomers() {
         return customerService.getCustomers();
+    }
+
+    @GetMapping(path = "{customerId}/orders")
+    public List<Report> getOrdersReport(
+            @PathVariable("customerId") Long id,
+            @RequestParam() Month month
+    ) {
+        return customerService.getOrdersReport(id, month);
     }
 
     @PostMapping

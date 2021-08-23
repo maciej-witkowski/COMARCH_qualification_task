@@ -12,7 +12,7 @@ import java.util.List;
 public class CustomerConfig {
 
     @Bean
-    CommandLineRunner commandLineRunnerConsumer(CustomerRepository repository) {
+    CommandLineRunner commandLineRunnerCustomer(CustomerRepository repository) {
         return args -> {
             Customer customer0 = new Customer(
                     "Maciej",
