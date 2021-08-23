@@ -1,5 +1,6 @@
 package com.maciej_witkowski.rental.controller;
 
+import com.maciej_witkowski.rental.dto.OrdersDTO;
 import com.maciej_witkowski.rental.model.Orders;
 import com.maciej_witkowski.rental.service.OrdersService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,11 @@ public class OrdersController {
     @GetMapping
     public List<Orders> getOrders() {
         return orderService.getOrders();
+    }
+
+    @PostMapping
+    public Orders registerOrder(@RequestBody OrdersDTO order) {
+        return orderService.registerOrder(order);
     }
 
 }
