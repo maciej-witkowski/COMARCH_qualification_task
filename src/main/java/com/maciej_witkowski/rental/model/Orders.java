@@ -1,5 +1,6 @@
 package com.maciej_witkowski.rental.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
@@ -14,6 +15,26 @@ public class Orders {
     @SequenceGenerator(name = "orders_sequence", sequenceName = "orders_sequence", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "orders_sequence")
     private Long id;
+
+    @ManyToOne
+    @JoinColumn(
+            name = "customer_id",
+            nullable = false,
+            referencedColumnName = "id",
+            foreignKey = @ForeignKey(name = "customer_orders_fk")
+    )
+    @JsonBackReference
+    private Customer customer;
+
+    @ManyToOne
+    @JoinColumn(
+            name = "product_id",
+            nullable = false,
+            referencedColumnName = "id",
+            foreignKey = @ForeignKey(name = "product_orders_fk")
+    )
+    @JsonBackReference
+    private Product product;
 
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime dateOfLoan;

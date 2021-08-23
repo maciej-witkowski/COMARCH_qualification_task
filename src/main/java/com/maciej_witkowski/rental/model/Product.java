@@ -2,6 +2,8 @@ package com.maciej_witkowski.rental.model;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table
@@ -15,14 +17,15 @@ public class Product {
     private String brand;
     private BigDecimal price;
 
-    public Product() {}
+    @OneToMany(
+            mappedBy = "product",
+            orphanRemoval = true,
+            cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
+            fetch = FetchType.LAZY
+    )
+    private List<Orders> orders = new ArrayList<>();
 
-    public Product(Long id, String name, String brand, BigDecimal price) {
-        this.id = id;
-        this.name = name;
-        this.brand = brand;
-        this.price = price;
-    }
+    public Product() {}
 
     public Product(String name, String brand, BigDecimal price) {
         this.name = name;

@@ -1,6 +1,8 @@
 package com.maciej_witkowski.rental.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table
@@ -14,6 +16,14 @@ public class Customer {
     private String lastName;
     private String email;
     private String phoneNumber;
+
+    @OneToMany(
+            mappedBy = "customer",
+            orphanRemoval = true,
+            cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
+            fetch = FetchType.LAZY
+    )
+    private List<Orders> orders = new ArrayList<>();
 
     public Customer() {}
 
