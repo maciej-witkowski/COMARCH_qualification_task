@@ -43,7 +43,6 @@ public class Orders {
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime dateOfReturn;
 
-    @Transient
     private BigDecimal totalPrice;
 
     public Orders() {}
@@ -53,6 +52,7 @@ public class Orders {
         this.product = product;
         this.dateOfLoan = dateOfLoan;
         this.dateOfReturn = dateOfReturn;
+        this.totalPrice = this.product.getPrice().multiply(new BigDecimal(MINUTES.between(this.dateOfLoan, this.dateOfReturn)));
     }
 
     public Long getId() {
@@ -96,7 +96,7 @@ public class Orders {
     }
 
     public BigDecimal getTotalPrice() {
-        return this.product.getPrice().multiply(new BigDecimal(MINUTES.between(this.dateOfLoan, this.dateOfReturn)));
+        return totalPrice;
     }
 
     public void setTotalPrice(BigDecimal totalPrice) {
