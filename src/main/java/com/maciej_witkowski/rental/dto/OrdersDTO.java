@@ -8,7 +8,8 @@ public class OrdersDTO {
 
     private Long id;
     private Long customerId;
-    private Long productId;
+    private String name;
+    private String brand;
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime dateOfLoan;
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
@@ -16,10 +17,11 @@ public class OrdersDTO {
 
     public OrdersDTO() {}
 
-    public OrdersDTO(Long id, Long customerId, Long productId, LocalDateTime dateOfLoan, LocalDateTime dateOfReturn) {
+    public OrdersDTO(Long id, Long customerId, String name, String brand, LocalDateTime dateOfLoan, LocalDateTime dateOfReturn) {
         this.id = id;
         this.customerId = customerId;
-        this.productId = productId;
+        this.name = name;
+        this.brand = brand;
         this.dateOfLoan = dateOfLoan;
         this.dateOfReturn = dateOfReturn;
     }
@@ -40,12 +42,20 @@ public class OrdersDTO {
         this.customerId = customerId;
     }
 
-    public Long getProductId() {
-        return productId;
+    public String getName() {
+        return name;
     }
 
-    public void setProductId(Long productId) {
-        this.productId = productId;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
     }
 
     public LocalDateTime getDateOfLoan() {

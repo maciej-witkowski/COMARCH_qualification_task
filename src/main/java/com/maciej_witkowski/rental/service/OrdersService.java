@@ -34,7 +34,7 @@ public class OrdersService {
     public Orders registerOrder(OrdersDTO order) {
 
         Optional<Customer> optionalCustomer = customerRepository.findById(order.getCustomerId());
-        Optional<Product> optionalProduct = productRepository.findById(order.getProductId());
+        Optional<Product> optionalProduct = productRepository.findProductByNameAndBrand(order.getName(), order.getBrand());
 
         if (optionalCustomer.isEmpty() || optionalProduct.isEmpty()) {
             throw new IllegalStateException("Given customer id or product id does not exists!");
@@ -46,8 +46,6 @@ public class OrdersService {
                 order.getDateOfLoan(),
                 order.getDateOfReturn()
         );
-
-        System.out.println(received);
 
         ordersRepository.save(received);
         return received;
