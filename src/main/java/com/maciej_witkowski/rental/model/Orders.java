@@ -7,6 +7,8 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+import static java.time.temporal.ChronoUnit.*;
+
 @Entity
 @Table
 public class Orders {
@@ -94,7 +96,7 @@ public class Orders {
     }
 
     public BigDecimal getTotalPrice() {
-        return totalPrice;
+        return this.product.getPrice().multiply(new BigDecimal(MINUTES.between(this.dateOfLoan, this.dateOfReturn)));
     }
 
     public void setTotalPrice(BigDecimal totalPrice) {
