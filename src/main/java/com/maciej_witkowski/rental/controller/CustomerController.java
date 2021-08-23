@@ -1,7 +1,6 @@
 package com.maciej_witkowski.rental.controller;
 
 import com.maciej_witkowski.rental.model.Customer;
-import com.maciej_witkowski.rental.model.Orders;
 import com.maciej_witkowski.rental.model.Report;
 import com.maciej_witkowski.rental.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;

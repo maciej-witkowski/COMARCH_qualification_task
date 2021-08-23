@@ -1,7 +1,7 @@
 package com.maciej_witkowski.rental.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -25,7 +25,7 @@ public class Orders {
             referencedColumnName = "id",
             foreignKey = @ForeignKey(name = "customer_orders_fk")
     )
-    @JsonBackReference
+    @JsonIgnore
     private Customer customer;
 
     @ManyToOne
@@ -35,7 +35,7 @@ public class Orders {
             referencedColumnName = "id",
             foreignKey = @ForeignKey(name = "product_orders_fk")
     )
-    @JsonBackReference
+    @JsonIgnore
     private Product product;
 
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")

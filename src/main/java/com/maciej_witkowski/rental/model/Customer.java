@@ -1,5 +1,7 @@
 package com.maciej_witkowski.rental.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +25,7 @@ public class Customer {
             cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
             fetch = FetchType.LAZY
     )
+    @JsonIgnore
     private List<Orders> orders = new ArrayList<>();
 
     public Customer() {}
