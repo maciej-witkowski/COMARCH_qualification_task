@@ -6,8 +6,13 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+@Entity
+@Table
 public class Orders {
 
+    @Id
+    @SequenceGenerator(name = "orders_sequence", sequenceName = "orders_sequence", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "orders_sequence")
     private Long id;
 
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
